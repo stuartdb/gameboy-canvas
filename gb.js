@@ -12,8 +12,13 @@ function draw_gb() {
         gb_sc_bg_y = 50,
         gb_sc_bg_h = 230,
         gb_sc_bg_w = gb_w - gb_sc_bg_x * 2,
+        gb_sc_x = 85,
+        gb_sc_y = 80,
+        gb_sc_h = 170,
+        gb_sc_w = gb_w - gb_sc_x * 2,
         c_shell = 'rgb(190,186,183)',
-        c_face = 'rgb(88,88,100)';
+        c_face = 'rgb(88,88,100)',
+        c_screen = 'rgb(80,100,20)';
 
     canvas = document.getElementById('gb');
     gb = canvas.getContext('2d');
@@ -38,6 +43,10 @@ function draw_gb() {
     // draw the background of the screen
     gb.fillStyle = c_face;
     gb.fillRect(gb_sc_bg_x, gb_sc_bg_y, gb_sc_bg_w, gb_sc_bg_h);
+
+    // draw the screen
+    gb.fillStyle = c_screen;
+    gb.fillRect(gb_sc_x, gb_sc_y, gb_sc_w, gb_sc_h);
 
 }
 
