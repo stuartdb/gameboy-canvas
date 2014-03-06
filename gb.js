@@ -41,6 +41,13 @@ function draw_gb() {
         gb_dpad_y = 400,
         gb_dpad_w = 45,
         gb_dpad_h = 30,
+        gb_bbut_rad = 20,
+        gb_bbut_x = 250,
+        gb_bbut_y = gb_dpad_y,
+        gb_abut_rad = gb_bbut_rad,
+        gb_abut_x = gb_sc_bg_x + gb_sc_bg_w - gb_abut_rad,
+        gb_abut_y = gb_bbut_y - gb_bbut_rad,
+        c_ab = 'rgb(140,30,80)',
         c_black = 'rgb(0,0,0)',
         c_shell = 'rgb(190,186,183)',
         c_face = 'rgb(88,88,100)',
@@ -63,6 +70,7 @@ function draw_gb() {
     gb.fillStyle = c_screen;
     gb.fillRect(gb_sc_x, gb_sc_y, gb_sc_w, gb_sc_h);
 
+    // draw dpad
     gb.fillStyle = c_black;
     gb.fillRect(gb_dpad_x - gb_dpad_w,
                 gb_dpad_y - gb_dpad_h / 2,
@@ -73,6 +81,19 @@ function draw_gb() {
                 gb_dpad_y - gb_dpad_w,
                 gb_dpad_h,
                 gb_dpad_w * 2);
+
+    // draw buttons
+    gb.beginPath();
+    gb.arc(gb_bbut_x, gb_bbut_y, gb_bbut_rad, 0, Math.PI * 2);
+    gb.closePath();
+    gb.fillStyle = c_ab;
+    gb.fill();
+
+    gb.beginPath();
+    gb.arc(gb_abut_x, gb_abut_y, gb_abut_rad, 0, Math.PI * 2);
+    gb.closePath();
+    gb.fillStyle = c_ab;
+    gb.fill();
 
 }
 
