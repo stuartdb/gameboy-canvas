@@ -17,6 +17,68 @@ function draw_gb_rect(gb, color, x, y, w, h, sc, bc) {
     gb.fill();
 }
 
+function draw_curved_rect(gb, color, x, y, w, h) {
+    'use strict';
+//    w = w * 0.5;
+//    h = h * 0.5;
+    var tx = x,
+        ty = y,
+        a = 337.5,
+        r = (Math.PI / 180) * a;
+
+    // translate the xy of context to centre of rect
+    gb.translate(tx, ty);
+    // rotate the context
+    gb.rotate(r);
+    // translate the xy of context back to top left
+    gb.translate(-tx, -ty);
+    // go about drawing the rectangle on the rotated context
+
+    // adjust x and y to be at the top left corner
+    y = y - h * 0.5;
+    x = x + h - w * 0.5;
+
+    // x and y denotes center of rectangle
+    gb.beginPath();
+    gb.moveTo(x, y);
+    gb.lineTo(x + w - h, y);
+    gb.bezierCurveTo(x + w, y, x + w, y + h, x + w - h, y + h);
+//    gb.quadraticCurveTo(x + w, y + h * 0.5, x + w - h * 0.5, y + h);
+//    gb.quadraticCurveTo(x + w, y, x + w, y + h * 0.5);
+//    gb.quadraticCurveTo(x + w, y + h, x + w - h, y + h);
+    gb.lineTo(x, y + h);
+    gb.bezierCurveTo(x - h, y + h, x - h, y, x, y);
+//    gb.quadraticCurveTo(x - h, y + h, x - h, y + h * 0.5);
+//    gb.quadraticCurveTo(x - h, y, x, y);
+
+    // gb.moveTo(x, y - h * 0.5);
+    // gb.lineTo(x + w / 2 - c, y - h / 2);
+    // gb.arcTo(x + w / 2, y - h / 2, x + w / 2, y + h / 2);
+
+    // gb.quadraticCurveTo(x + w / 2, y - h / 2, x + sc, y);
+    // gb.lineTo(x + w - sc, y);
+    // gb.quadraticCurveTo(x + w, y, x + w, y + sc);
+    // gb.lineTo(x + w, y + h - bc);
+    // gb.quadraticCurveTo(x + w, y + h, x + w - bc, y + h);
+    // gb.lineTo(x + sc, y + h);
+    // gb.quadraticCurveTo(x, y + h, x, y + h - sc);
+    // gb.lineTo(x, y + sc);
+    gb.closePath();
+    // fill in the shape created with supplied color
+    gb.fillStyle = color;
+    gb.fill();
+
+    // need to return the context back to it's original rotation
+    // translate the xy of context to centre of rect again
+    gb.translate(tx, ty);
+    // reverse the rotation of the context
+    gb.rotate(-r);
+    // translate the xy of context back to top left
+    gb.translate(-tx, -ty);
+    // hopefully everything is back the way it should be
+
+}
+
 function draw_gb() {
     'use strict';
     var canvas,
@@ -94,6 +156,9 @@ function draw_gb() {
     gb.closePath();
     gb.fillStyle = c_ab;
     gb.fill();
+
+    draw_curved_rect(gb, c_face, 130, 490, 40, 15);
+    draw_curved_rect(gb, c_face, 190, 490, 40, 15);
 
 }
 
