@@ -2,29 +2,25 @@ function draw_gb() {
     'use strict';
     var canvas,
         gb,
-        gb_w,
-        gb_h,
-        gb_x,
-        gb_y,
-        gb_sc,
-        gb_bc;
-
-    // width and height of console
-    gb_w = 430;
-    gb_h = 700;
-    // x and y start position
-    gb_x = 0;
-    gb_y = 0;
-    // curve sizes for the console corners
-    gb_sc = 20;
-    gb_bc = 100;
+        gb_x = 0,
+        gb_y = 0,
+        gb_w = 360,
+        gb_h = 592,
+        gb_sc = 10,
+        gb_bc = 70,
+        gb_sc_bg_x = 30,
+        gb_sc_bg_y = 50,
+        gb_sc_bg_h = 230,
+        gb_sc_bg_w = gb_w - gb_sc_bg_x * 2,
+        c_shell = 'rgb(190,186,183)',
+        c_face = 'rgb(88,88,100)';
 
     canvas = document.getElementById('gb');
     gb = canvas.getContext('2d');
 
-    // draw the outline of the console
-    gb.beginPath();
+    // path out the outline of the console
     // start with top left edge curve
+    gb.beginPath();
     gb.moveTo(gb_x, gb_sc);
     gb.quadraticCurveTo(gb_x, gb_y, gb_sc, gb_y);
     gb.lineTo(gb_w - gb_sc, gb_y);
@@ -35,13 +31,13 @@ function draw_gb() {
     gb.quadraticCurveTo(gb_x, gb_h, gb_x, gb_h - gb_sc);
     gb.lineTo(gb_x, gb_y + gb_sc);
     gb.closePath();
-    // fill the console
-    gb.fillStyle = 'rgb(190,186,183)';
+    // fill in the outline path of the console
+    gb.fillStyle = c_shell;
     gb.fill();
-    // describe the 'pen' and draw the line
-    gb.lineWidth = 2;
-    gb.strokeStyle = 'rgb(190,186,183)';
-    gb.stroke();
+
+    // draw the background of the screen
+    gb.fillStyle = c_face;
+    gb.fillRect(gb_sc_bg_x, gb_sc_bg_y, gb_sc_bg_w, gb_sc_bg_h);
 
 }
 
