@@ -37,6 +37,11 @@ function draw_gb() {
         gb_sc_y = 80,
         gb_sc_h = 170,
         gb_sc_w = gb_w - gb_sc_x * 2,
+        gb_dpad_x = 75,
+        gb_dpad_y = 400,
+        gb_dpad_w = 45,
+        gb_dpad_h = 30,
+        c_black = 'rgb(0,0,0)',
         c_shell = 'rgb(190,186,183)',
         c_face = 'rgb(88,88,100)',
         c_screen = 'rgb(80,100,20)';
@@ -57,6 +62,17 @@ function draw_gb() {
     // draw the screen
     gb.fillStyle = c_screen;
     gb.fillRect(gb_sc_x, gb_sc_y, gb_sc_w, gb_sc_h);
+
+    gb.fillStyle = c_black;
+    gb.fillRect(gb_dpad_x - gb_dpad_w,
+                gb_dpad_y - gb_dpad_h / 2,
+                gb_dpad_w * 2,
+                gb_dpad_h);
+
+    gb.fillRect(gb_dpad_x - gb_dpad_h / 2,
+                gb_dpad_y - gb_dpad_w,
+                gb_dpad_h,
+                gb_dpad_w * 2);
 
 }
 
