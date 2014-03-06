@@ -1,3 +1,22 @@
+function draw_gb_rect(gb, color, x, y, w, h, sc, bc) {
+    'use strict';
+    // create the outline of the rect based supplied values
+    gb.beginPath();
+    gb.moveTo(x, y + sc);
+    gb.quadraticCurveTo(x, y, x + sc, y);
+    gb.lineTo(x + w - sc, y);
+    gb.quadraticCurveTo(x + w, y, x + w, y + sc);
+    gb.lineTo(x + w, y + h - bc);
+    gb.quadraticCurveTo(x + w, y + h, x + w - bc, y + h);
+    gb.lineTo(x + sc, y + h);
+    gb.quadraticCurveTo(x, y + h, x, y + h - sc);
+    gb.lineTo(x, y + sc);
+    gb.closePath();
+    // fill in the shape created with supplied color
+    gb.fillStyle = color;
+    gb.fill();
+}
+
 function draw_gb() {
     'use strict';
     var canvas,
@@ -12,6 +31,8 @@ function draw_gb() {
         gb_sc_bg_y = 50,
         gb_sc_bg_h = 230,
         gb_sc_bg_w = gb_w - gb_sc_bg_x * 2,
+        gb_sc_bg_sc = 10,
+        gb_sc_bg_bc = 40,
         gb_sc_x = 85,
         gb_sc_y = 80,
         gb_sc_h = 170,
@@ -23,26 +44,15 @@ function draw_gb() {
     canvas = document.getElementById('gb');
     gb = canvas.getContext('2d');
 
-    // path out the outline of the console
-    // start with top left edge curve
-    gb.beginPath();
-    gb.moveTo(gb_x, gb_sc);
-    gb.quadraticCurveTo(gb_x, gb_y, gb_sc, gb_y);
-    gb.lineTo(gb_w - gb_sc, gb_y);
-    gb.quadraticCurveTo(gb_w, gb_y, gb_w, gb_sc);
-    gb.lineTo(gb_w, gb_h - gb_bc);
-    gb.quadraticCurveTo(gb_w, gb_h, gb_w - gb_bc, gb_h);
-    gb.lineTo(gb_sc, gb_h);
-    gb.quadraticCurveTo(gb_x, gb_h, gb_x, gb_h - gb_sc);
-    gb.lineTo(gb_x, gb_y + gb_sc);
-    gb.closePath();
-    // fill in the outline path of the console
-    gb.fillStyle = c_shell;
-    gb.fill();
-
-    // draw the background of the screen
-    gb.fillStyle = c_face;
-    gb.fillRect(gb_sc_bg_x, gb_sc_bg_y, gb_sc_bg_w, gb_sc_bg_h);
+    draw_gb_rect(gb, c_shell, gb_x, gb_y, gb_w, gb_h, gb_sc, gb_bc);
+    draw_gb_rect(gb,
+                 c_face,
+                 gb_sc_bg_x,
+                 gb_sc_bg_y,
+                 gb_sc_bg_w,
+                 gb_sc_bg_h,
+                 gb_sc_bg_sc,
+                 gb_sc_bg_bc);
 
     // draw the screen
     gb.fillStyle = c_screen;
