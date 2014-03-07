@@ -28,67 +28,93 @@ function draw_gb_rect(con, color, x, y, w, h, sc, bc) {
     con.fill();
 }
 
-function draw_curved_rect(gb, color, x, y, w, h) {
+/**
+* Draws a rectangle with curved ends.
+* The height represents the size of the sides that will have curved ends
+* Which means the width will almost always be the longest dimension.
+* If you want the opposite to that, specify an angle of 90
+* @param {Object} con Canvas context to draw rect on.
+* @param {String} color RGB color string 'rgb(0,0,0)'
+* @param {Number} cx X position of the centre of the rect
+* @param {Number} cy Y position of the centre of the rect
+* @param {Number} w Width of the rect
+* @param {Number} h Height of the rect
+* @param {Number} a The angle of the rect
+**/
+function draw_curved_rect(con, color, cx, cy, w, h, a) {
     'use strict';
-//    w = w * 0.5;
-//    h = h * 0.5;
-    var tx = x,
-        ty = y,
-        a = 337.5,
+    // x,y is set to top left of rect after curve to begin pathing
+    // r is angle converted to radians which is what rotate() accepts
+    var x = cx + h - w * 0.5,
+        y = cy - h * 0.5,
         r = (Math.PI / 180) * a;
 
-    // translate the xy of context to centre of rect
-    gb.translate(tx, ty);
-    // rotate the context
-    gb.rotate(r);
-    // translate the xy of context back to top left
-    gb.translate(-tx, -ty);
-    // go about drawing the rectangle on the rotated context
+    // translate context to centre of rect, rotate it, return to 'real' 0,0
+    con.translate(cx, cy);
+    con.rotate(r);
+    con.translate(-cx, -cy);
 
-    // adjust x and y to be at the top left corner
-    y = y - h * 0.5;
-    x = x + h - w * 0.5;
+    con.beginPath();
+    con.moveTo(x, y);
+    con.lineTo(x + w - h, y);
+    con.bezierCurveTo(x + w, y, x + w, y + h, x + w - h, y + h);
+    con.lineTo(x, y + h);
+    con.bezierCurveTo(x - h, y + h, x - h, y, x, y);
+    con.closePath();
+    con.fillStyle = color;
+    con.fill();
 
-    // x and y denotes center of rectangle
-    gb.beginPath();
-    gb.moveTo(x, y);
-    gb.lineTo(x + w - h, y);
-    gb.bezierCurveTo(x + w, y, x + w, y + h, x + w - h, y + h);
-//    gb.quadraticCurveTo(x + w, y + h * 0.5, x + w - h * 0.5, y + h);
-//    gb.quadraticCurveTo(x + w, y, x + w, y + h * 0.5);
-//    gb.quadraticCurveTo(x + w, y + h, x + w - h, y + h);
-    gb.lineTo(x, y + h);
-    gb.bezierCurveTo(x - h, y + h, x - h, y, x, y);
-//    gb.quadraticCurveTo(x - h, y + h, x - h, y + h * 0.5);
-//    gb.quadraticCurveTo(x - h, y, x, y);
+    // the previous context rotation has to be undone
+    con.translate(cx, cy);
+    con.rotate(-r);
+    con.translate(-cx, -cy);
+}
 
-    // gb.moveTo(x, y - h * 0.5);
-    // gb.lineTo(x + w / 2 - c, y - h / 2);
-    // gb.arcTo(x + w / 2, y - h / 2, x + w / 2, y + h / 2);
+/**
+* Draws a rectangle with smoothed corners.
+* @param {Object} con Canvas context to draw rect on.
+* @param {String} color RGB color string 'rgb(0,0,0)'
+* @param {Number} cx X position of the centre of the rect
+* @param {Number} cy Y position of the centre of the rect
+* @param {Number} w Width of the rect
+* @param {Number} h Height of the rect
+* @param {Number} cs Curve size, size of rounded edges
+* @param {Number} a Angle of the rect
+**/
+function draw_smooth_rect(con, color, cx, cy, w, h, sc, a) {
+    'use strict';
+    // x,y is set to top left of rect (0,0)
+    // r is angle converted to radians which is what rotate() accepts
+    var x = cx - w * 0.5,
+        y = cy - h * 0.5,
+        r = (Math.PI / 180) * a;
 
-    // gb.quadraticCurveTo(x + w / 2, y - h / 2, x + sc, y);
-    // gb.lineTo(x + w - sc, y);
-    // gb.quadraticCurveTo(x + w, y, x + w, y + sc);
-    // gb.lineTo(x + w, y + h - bc);
-    // gb.quadraticCurveTo(x + w, y + h, x + w - bc, y + h);
-    // gb.lineTo(x + sc, y + h);
-    // gb.quadraticCurveTo(x, y + h, x, y + h - sc);
-    // gb.lineTo(x, y + sc);
-    gb.closePath();
-    // fill in the shape created with supplied color
-    gb.fillStyle = color;
-    gb.fill();
+    // translate context to centre of rect, rotate it, return to 'real' 0,0
+    con.translate(cx, cy);
+    con.rotate(r);
+    con.translate(-cx, -cy);
 
-    // need to return the context back to it's original rotation
-    // translate the xy of context to centre of rect again
-    gb.translate(tx, ty);
-    // reverse the rotation of the context
-    gb.rotate(-r);
-    // translate the xy of context back to top left
-    gb.translate(-tx, -ty);
-    // hopefully everything is back the way it should be
+    con.beginPath();
+    con.moveTo(x, y + sc);
+    con.quadraticCurveTo(x, y, x + sc, y);
+    con.lineTo(x + w - sc, y);
+    con.quadraticCurveTo(x + w, y, x + w, y + sc);
+    con.lineTo(x + w, y + h - sc);
+    con.quadraticCurveTo(x + w, y + h, x + w - sc, y + h);
+    con.lineTo(x + sc, y + h);
+    con.quadraticCurveTo(x, y + h, x, y + h - sc);
+    con.lineTo(x, y + sc);
+    con.closePath();
+    con.fillStyle = color;
+    con.fill();
+
+    // the previous context rotation has to be undone
+    con.translate(cx, cy);
+    con.rotate(-r);
+    con.translate(-cx, -cy);
 
 }
+
 
 function draw_gb() {
     'use strict';
@@ -143,17 +169,23 @@ function draw_gb() {
     gb.fillStyle = c_screen;
     gb.fillRect(gb_sc_x, gb_sc_y, gb_sc_w, gb_sc_h);
 
-    // draw dpad
-    gb.fillStyle = c_black;
-    gb.fillRect(gb_dpad_x - gb_dpad_w,
-                gb_dpad_y - gb_dpad_h / 2,
-                gb_dpad_w * 2,
-                gb_dpad_h);
+    draw_smooth_rect(gb,
+                     c_black,
+                     gb_dpad_x,
+                     gb_dpad_y,
+                     gb_dpad_w * 2,
+                     gb_dpad_h,
+                     6,
+                     0);
 
-    gb.fillRect(gb_dpad_x - gb_dpad_h / 2,
-                gb_dpad_y - gb_dpad_w,
-                gb_dpad_h,
-                gb_dpad_w * 2);
+    draw_smooth_rect(gb,
+                     c_black,
+                     gb_dpad_x,
+                     gb_dpad_y,
+                     gb_dpad_w * 2,
+                     gb_dpad_h,
+                     6,
+                     90);
 
     // draw buttons
     gb.beginPath();
@@ -168,8 +200,8 @@ function draw_gb() {
     gb.fillStyle = c_ab;
     gb.fill();
 
-    draw_curved_rect(gb, c_face, 130, 490, 40, 15);
-    draw_curved_rect(gb, c_face, 190, 490, 40, 15);
+    draw_curved_rect(gb, c_face, 130, 490, 40, 15, 337.5);
+    draw_curved_rect(gb, c_face, 190, 490, 40, 15, 337.5);
 
 }
 
