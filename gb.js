@@ -1,20 +1,31 @@
-function draw_gb_rect(gb, color, x, y, w, h, sc, bc) {
+/**
+* Draws a rectangle in the shape of the gameboy console.
+* It's fairly unique in that the lower right corner has a large curve.
+* All other corners have a small curve.
+* @param {Object} con Canvas context to draw rect on.
+* @param {String} color RGB color string 'rgb(0,0,0)'
+* @param {Number} x X position to start drawing top left corner of rect
+* @param {Number} y Y position to start drawing top left corner of rect
+* @param {Number} w Width of the rect
+* @param {Number} h Height of the rect
+* @param {Number} sc Size of the small corners
+* @param {Number} bc Size of the lower right large corner
+**/
+function draw_gb_rect(con, color, x, y, w, h, sc, bc) {
     'use strict';
-    // create the outline of the rect based supplied values
-    gb.beginPath();
-    gb.moveTo(x, y + sc);
-    gb.quadraticCurveTo(x, y, x + sc, y);
-    gb.lineTo(x + w - sc, y);
-    gb.quadraticCurveTo(x + w, y, x + w, y + sc);
-    gb.lineTo(x + w, y + h - bc);
-    gb.quadraticCurveTo(x + w, y + h, x + w - bc, y + h);
-    gb.lineTo(x + sc, y + h);
-    gb.quadraticCurveTo(x, y + h, x, y + h - sc);
-    gb.lineTo(x, y + sc);
-    gb.closePath();
-    // fill in the shape created with supplied color
-    gb.fillStyle = color;
-    gb.fill();
+    con.beginPath();
+    con.moveTo(x, y + sc);
+    con.quadraticCurveTo(x, y, x + sc, y);
+    con.lineTo(x + w - sc, y);
+    con.quadraticCurveTo(x + w, y, x + w, y + sc);
+    con.lineTo(x + w, y + h - bc);
+    con.quadraticCurveTo(x + w, y + h, x + w - bc, y + h);
+    con.lineTo(x + sc, y + h);
+    con.quadraticCurveTo(x, y + h, x, y + h - sc);
+    con.lineTo(x, y + sc);
+    con.closePath();
+    con.fillStyle = color;
+    con.fill();
 }
 
 function draw_curved_rect(gb, color, x, y, w, h) {
