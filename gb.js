@@ -166,6 +166,7 @@ function draw_gb() {
         c_shell = 'rgb(190,190,190)',
         c_face = 'rgb(88,88,100)',
         c_grill = 'rgb(200,200,200)',
+        c_battery = 'rgb(40,40,40)',
         c_screen = 'rgb(80,100,20)';
 
     canvas = document.getElementById('gb');
@@ -217,6 +218,12 @@ function draw_gb() {
     draw_curved_rect(gb, c_grill, 300, 532.5, 50, 5, 67.5);
     draw_curved_rect(gb, c_grill, 315, 525, 50, 5, 67.5);
     draw_curved_rect(gb, c_grill, 330, 517.5, 50, 5, 67.5);
+
+    // battery light
+    draw_circle(gb, c_battery, 60, 140, 5);
+
+    // headphone detail
+    draw_curved_rect(gb, c_grill, 160, 575, 40, 15, 0);
 }
 
 draw_gb();
