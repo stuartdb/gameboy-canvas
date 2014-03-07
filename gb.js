@@ -163,8 +163,9 @@ function draw_gb() {
         gb_abut_y = gb_bbut_y - gb_bbut_rad,
         c_ab = 'rgb(140,30,80)',
         c_black = 'rgb(0,0,0)',
-        c_shell = 'rgb(190,186,183)',
+        c_shell = 'rgb(190,190,190)',
         c_face = 'rgb(88,88,100)',
+        c_grill = 'rgb(200,200,200)',
         c_screen = 'rgb(80,100,20)';
 
     canvas = document.getElementById('gb');
@@ -205,9 +206,17 @@ function draw_gb() {
     draw_circle(gb, c_ab, gb_bbut_x, gb_bbut_y, gb_bbut_rad);
     draw_circle(gb, c_ab, gb_abut_x, gb_abut_y, gb_abut_rad);
 
+    // start and select
     draw_curved_rect(gb, c_face, 130, 490, 40, 15, 337.5);
     draw_curved_rect(gb, c_face, 190, 490, 40, 15, 337.5);
 
+    // grill
+    draw_curved_rect(gb, c_grill, 255, 555, 50, 5, 67.5);
+    draw_curved_rect(gb, c_grill, 270, 547.5, 50, 5, 67.5);
+    draw_curved_rect(gb, c_grill, 285, 540, 50, 5, 67.5);
+    draw_curved_rect(gb, c_grill, 300, 532.5, 50, 5, 67.5);
+    draw_curved_rect(gb, c_grill, 315, 525, 50, 5, 67.5);
+    draw_curved_rect(gb, c_grill, 330, 517.5, 50, 5, 67.5);
 }
 
 draw_gb();
