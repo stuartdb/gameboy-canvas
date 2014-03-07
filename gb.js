@@ -112,9 +112,24 @@ function draw_smooth_rect(con, color, cx, cy, w, h, sc, a) {
     con.translate(cx, cy);
     con.rotate(-r);
     con.translate(-cx, -cy);
-
 }
 
+/**
+* Draws circle at specified location
+* @param {Object} con Canvas context to draw rect on.
+* @param {String} color RGB color string 'rgb(0,0,0)'
+* @param {Number} x X position of the centre of the circle
+* @param {Number} y Y position of the centre of the circle
+* @param {Number} r Radius of circle
+**/
+function draw_circle(con, color, x, y, r) {
+    'use strict';
+    con.beginPath();
+    con.arc(x, y, r, 0, Math.PI * 2);
+    con.closePath();
+    con.fillStyle = color;
+    con.fill();
+}
 
 function draw_gb() {
     'use strict';
@@ -187,18 +202,8 @@ function draw_gb() {
                      6,
                      90);
 
-    // draw buttons
-    gb.beginPath();
-    gb.arc(gb_bbut_x, gb_bbut_y, gb_bbut_rad, 0, Math.PI * 2);
-    gb.closePath();
-    gb.fillStyle = c_ab;
-    gb.fill();
-
-    gb.beginPath();
-    gb.arc(gb_abut_x, gb_abut_y, gb_abut_rad, 0, Math.PI * 2);
-    gb.closePath();
-    gb.fillStyle = c_ab;
-    gb.fill();
+    draw_circle(gb, c_ab, gb_bbut_x, gb_bbut_y, gb_bbut_rad);
+    draw_circle(gb, c_ab, gb_abut_x, gb_abut_y, gb_abut_rad);
 
     draw_curved_rect(gb, c_face, 130, 490, 40, 15, 337.5);
     draw_curved_rect(gb, c_face, 190, 490, 40, 15, 337.5);
