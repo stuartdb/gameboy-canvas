@@ -131,6 +131,27 @@ function draw_circle(con, color, x, y, r) {
     con.fill();
 }
 
+/**
+* Draws a line between two locations
+* @param {Object} con Canvas context to draw line on.
+* @param {String} color RGB color string 'rgb(0,0,0)'
+* @param {Number} sx X position of the start of the line
+* @param {Number} sy Y position of the start of the line
+* @param {Number} ex X position of the end of the line
+* @param {Number} ey Y position of the end of the line
+* @param {Number} w Width or thickness of the line
+**/
+function draw_line(con, color, sx, sy, ex, ey, w) {
+    "use strict";
+    con.beginPath();
+    con.moveTo(sx, sy);
+    con.lineTo(ex, ey);
+    con.closePath();
+    con.lineWidth = w;
+    con.strokeStyle = color;
+    con.stroke();
+}
+
 function draw_gb() {
     'use strict';
     var canvas,
@@ -224,6 +245,9 @@ function draw_gb() {
 
     // headphone detail
     draw_curved_rect(gb, c_grill, 160, 575, 40, 15, 0);
+    draw_line(gb, c_grill, 165, 575, 165, 592, 3);
+    draw_line(gb, c_grill, 172, 575, 172, 592, 3);
+    draw_line(gb, c_grill, 179, 575, 179, 592, 3);
 }
 
 draw_gb();
