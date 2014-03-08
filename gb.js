@@ -1,4 +1,19 @@
 /**
+* Rotate the context by the specified angle
+* @param {Object} con Canvas context to rotate
+* @param {Number} x X position to rotate around
+* @param {Number} y Y position to rotate around
+* @param {Number} r Angle in radians
+**/
+function rotate_context(con, x, y, r) {
+    'use strict';
+    // translate context to x,y, rotate it, return to 'real' 0,0
+    con.translate(x, y);
+    con.rotate(r);
+    con.translate(-x, -y);
+}
+
+/**
 * Draws a rectangle in the shape of the gameboy console.
 * It's fairly unique in that the lower right corner has a large curve.
 * All other corners have a small curve.
@@ -44,16 +59,12 @@ function draw_gb_rect(con, color, x, y, w, h, sc, bc) {
 function draw_curved_rect(con, color, cx, cy, w, h, a) {
     'use strict';
     // x,y is set to top left of rect after curve to begin pathing
-    // r is angle converted to radians which is what rotate() accepts
+    // r is angle converted to radians which is what rotate accepts
     var x = cx + h - w * 0.5,
         y = cy - h * 0.5,
         r = (Math.PI / 180) * a;
 
-    // translate context to centre of rect, rotate it, return to 'real' 0,0
-    con.translate(cx, cy);
-    con.rotate(r);
-    con.translate(-cx, -cy);
-
+    rotate_context(con, cx, cy, r);
     con.beginPath();
     con.moveTo(x, y);
     con.lineTo(x + w - h, y);
@@ -63,11 +74,7 @@ function draw_curved_rect(con, color, cx, cy, w, h, a) {
     con.closePath();
     con.fillStyle = color;
     con.fill();
-
-    // the previous context rotation has to be undone
-    con.translate(cx, cy);
-    con.rotate(-r);
-    con.translate(-cx, -cy);
+    rotate_context(con, cx, cy, -r);
 }
 
 /**
@@ -84,16 +91,12 @@ function draw_curved_rect(con, color, cx, cy, w, h, a) {
 function draw_smooth_rect(con, color, cx, cy, w, h, sc, a) {
     'use strict';
     // x,y is set to top left of rect (0,0)
-    // r is angle converted to radians which is what rotate() accepts
+    // r is angle converted to radians which is what rotate accepts
     var x = cx - w * 0.5,
         y = cy - h * 0.5,
         r = (Math.PI / 180) * a;
 
-    // translate context to centre of rect, rotate it, return to 'real' 0,0
-    con.translate(cx, cy);
-    con.rotate(r);
-    con.translate(-cx, -cy);
-
+    rotate_context(con, cx, cy, r);
     con.beginPath();
     con.moveTo(x, y + sc);
     con.quadraticCurveTo(x, y, x + sc, y);
@@ -107,11 +110,7 @@ function draw_smooth_rect(con, color, cx, cy, w, h, sc, a) {
     con.closePath();
     con.fillStyle = color;
     con.fill();
-
-    // the previous context rotation has to be undone
-    con.translate(cx, cy);
-    con.rotate(-r);
-    con.translate(-cx, -cy);
+    rotate_context(con, cx, cy, -r);
 }
 
 /**
@@ -152,6 +151,34 @@ function draw_line(con, color, sx, sy, ex, ey, w) {
     con.stroke();
 }
 
+/**
+* Draws a triangle at the specified location
+* @param {Object} con Canvas context to draw trigangle on.
+* @param {String} color RGB color string 'rgb(0,0,0)'
+* @param {Number} cx X position of the center of the triangle
+* @param {Number} cy Y position of the center of the triangle
+* @param {Number} w Width or length of one side
+* @param {Number} a Angle of the triangle
+**/
+function draw_triangle(con, color, cx, cy, w, a) {
+    "use strict";
+    var x = cx - w / 2,
+        y = cy + w / 2,
+        r = (Math.PI / 180) * a;
+
+    rotate_context(con, cx, cy, r);
+    con.beginPath();
+    con.moveTo(x, y);
+    con.lineTo(x + w, y);
+    con.lineTo(x + w / 2, y - w);
+    con.lineTo(x, y);
+    con.closePath();
+    con.fillStyle = color;
+    con.fill();
+    rotate_context(con, cx, cy, -r);
+}
+
+
 function draw_gb() {
     'use strict';
     var canvas,
@@ -186,7 +213,8 @@ function draw_gb() {
         c_black = 'rgb(0,0,0)',
         c_shell = 'rgb(190,190,190)',
         c_face = 'rgb(88,88,100)',
-        c_grill = 'rgb(200,200,200)',
+//        c_grill = 'rgb(200,200,200)',
+        c_grill = 'rgb(0,0,0)',
         c_battery = 'rgb(40,40,40)',
         c_blue = 'rgb(20,30,120)',
         c_screen = 'rgb(80,100,20)';
@@ -264,6 +292,12 @@ function draw_gb() {
     // lines within the screen background
     draw_line(gb, c_ab, 40, 60, 320, 60, 3);
     draw_line(gb, c_blue, 40, 65, 320, 65, 3);
+
+    // draw small triangle details around dpad
+    draw_triangle(gb, c_grill, 75, 350, 7, 0);
+    draw_triangle(gb, c_grill, 25, 400, 7, 270);
+    draw_triangle(gb, c_grill, 125, 400, 7, 90);
+    draw_triangle(gb, c_grill, 75, 450, 7, 180);
 }
 
 draw_gb();
