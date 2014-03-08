@@ -188,6 +188,7 @@ function draw_gb() {
         c_face = 'rgb(88,88,100)',
         c_grill = 'rgb(200,200,200)',
         c_battery = 'rgb(40,40,40)',
+        c_blue = 'rgb(20,30,120)',
         c_screen = 'rgb(80,100,20)';
 
     canvas = document.getElementById('gb');
@@ -241,13 +242,28 @@ function draw_gb() {
     draw_curved_rect(gb, c_grill, 330, 517.5, 50, 5, 67.5);
 
     // battery light
-    draw_circle(gb, c_battery, 60, 140, 5);
+    draw_circle(gb, c_battery, 55, 140, 5);
 
     // headphone detail
     draw_curved_rect(gb, c_grill, 160, 575, 40, 15, 0);
     draw_line(gb, c_grill, 165, 575, 165, 592, 3);
     draw_line(gb, c_grill, 172, 575, 172, 592, 3);
     draw_line(gb, c_grill, 179, 575, 179, 592, 3);
+
+    // on off detail
+    draw_curved_rect(gb, c_grill, 80, 15, 50, 15, 0);
+    draw_line(gb, c_grill, 70, 15, 70, 0, 3);
+    draw_line(gb, c_grill, 77, 15, 77, 0, 3);
+    draw_line(gb, c_grill, 84, 15, 84, 0, 3);
+
+    // lines at top of console
+    draw_line(gb, c_grill, 0, 30, 360, 30, 3);
+    draw_line(gb, c_grill, 30, 0, 30, 30, 3);
+    draw_line(gb, c_grill, 330, 0, 330, 30, 3);
+
+    // lines within the screen background
+    draw_line(gb, c_ab, 40, 60, 320, 60, 3);
+    draw_line(gb, c_blue, 40, 65, 320, 65, 3);
 }
 
 draw_gb();
