@@ -2,12 +2,12 @@
     'use strict';
     var actions,
         canvas,
-        colors = {
-
-        },
+        colors,
         context,
         draw,
-        shapes;
+        init,
+        shapes,
+        update;
 
     actions = {
         /**
@@ -21,6 +21,65 @@
             context.translate(x, y);
             context.rotate(r);
             context.translate(-x, -y);
+        }
+    };
+
+    colors = {
+        /**
+         * Sets the color codes to black and white
+         **/
+        bw : function () {
+            colors.ab = 'rgb(255,255,255)';
+            colors.dpad = 'rgb(255,255,255)';
+            colors.shell = 'rgb(0,0,0)';
+            colors.face = 'rgb(255,255,255)';
+            colors.detail = 'rgb(255,255,255)';
+            colors.battery = 'rgb(0,0,0)';
+            colors.line1 = 'rgb(0,0,0)';
+            colors.line2 = 'rgb(0,0,0)';
+            colors.screen = 'rgb(0,0,0)';
+        },
+        /**
+         * Sets the color codes to attempt to emulate the screen colors.
+         **/
+        mono : function () {
+            colors.ab = 'rgb(140,30,80)';
+            colors.dpad = 'rgb(0,0,0)';
+            colors.shell = 'rgb(190,190,190)';
+            colors.face = 'rgb(88,88,100)';
+            colors.detail = 'rgb(200,200,200)';
+            colors.battery = 'rgb(40,40,40)';
+            colors.line1 = 'rgb(140,30,80)';
+            colors.line2 = 'rgb(20,30,120)';
+            colors.screen = 'rgb(80,100,20)';
+        },
+        /**
+         * Sets the color codes close to that of the original system.
+         **/
+        standard : function () {
+            colors.ab = 'rgb(140,30,80)';
+            colors.dpad = 'rgb(0,0,0)';
+            colors.shell = 'rgb(190,190,190)';
+            colors.face = 'rgb(88,88,100)';
+            colors.detail = 'rgb(200,200,200)';
+            colors.battery = 'rgb(40,40,40)';
+            colors.line1 = 'rgb(140,30,80)';
+            colors.line2 = 'rgb(20,30,120)';
+            colors.screen = 'rgb(80,100,20)';
+        },
+        /**
+         * Sets the color codes to some crazy rainbow colors
+         **/
+        rainbow : function () {
+            colors.ab = 'rgb(140,30,80)';
+            colors.dpad = 'rgb(0,0,0)';
+            colors.shell = 'rgb(190,190,190)';
+            colors.face = 'rgb(88,88,100)';
+            colors.detail = 'rgb(200,200,200)';
+            colors.battery = 'rgb(40,40,40)';
+            colors.line1 = 'rgb(140,30,80)';
+            colors.line2 = 'rgb(20,30,120)';
+            colors.screen = 'rgb(80,100,20)';
         }
     };
 
@@ -186,79 +245,110 @@
      * positions. This makes it easier to make small adjustments.
      **/
     draw = function () {
-        var color_a_b = 'rgb(140,30,80)',
-            color_dpad = 'rgb(0,0,0)',
-            color_shell = 'rgb(190,190,190)',
-            color_face = 'rgb(88,88,100)',
-            color_detail = 'rgb(200,200,200)',
-            color_battery = 'rgb(40,40,40)',
-            color_line_1 = 'rgb(140,30,80)',
-            color_line_2 = 'rgb(20,30,120)',
-            color_screen = 'rgb(80,100,20)';
-
-        canvas = document.getElementById('gameboy');
-        context = canvas.getContext('2d');
-
         // console
-        shapes.unique(color_shell, 0, 0, 360, 592, 10, 70);
+        shapes.unique(colors.shell, 0, 0, 360, 592, 10, 70);
 
         // screen background
-        shapes.unique(color_face, 30, 50, 300, 230, 10, 40);
+        shapes.unique(colors.face, 30, 50, 300, 230, 10, 40);
 
         // screen
-        context.fillStyle = color_screen;
+        context.fillStyle = colors.screen;
         context.fillRect(85, 80, 190, 170);
 
         // dpad
-        shapes.rectellipse(color_dpad, 75, 400, 90, 30, 6, 0);
-        shapes.rectellipse(color_dpad, 75, 400, 90, 30, 6, 90);
+        shapes.rectellipse(colors.dpad, 75, 400, 90, 30, 6, 0);
+        shapes.rectellipse(colors.dpad, 75, 400, 90, 30, 6, 90);
 
         // a and b buttons
-        shapes.circle(color_a_b, 250, 400, 20);
-        shapes.circle(color_a_b, 310, 380, 20);
+        shapes.circle(colors.ab, 250, 400, 20);
+        shapes.circle(colors.ab, 310, 380, 20);
 
         // start and select
-        shapes.stadium(color_face, 130, 490, 40, 15, 337.5);
-        shapes.stadium(color_face, 190, 490, 40, 15, 337.5);
+        shapes.stadium(colors.face, 130, 490, 40, 15, 337.5);
+        shapes.stadium(colors.face, 190, 490, 40, 15, 337.5);
 
         // grill
-        shapes.stadium(color_detail, 255, 555, 50, 5, 67.5);
-        shapes.stadium(color_detail, 270, 547.5, 50, 5, 67.5);
-        shapes.stadium(color_detail, 285, 540, 50, 5, 67.5);
-        shapes.stadium(color_detail, 300, 532.5, 50, 5, 67.5);
-        shapes.stadium(color_detail, 315, 525, 50, 5, 67.5);
-        shapes.stadium(color_detail, 330, 517.5, 50, 5, 67.5);
+        shapes.stadium(colors.detail, 255, 555, 50, 5, 67.5);
+        shapes.stadium(colors.detail, 270, 547.5, 50, 5, 67.5);
+        shapes.stadium(colors.detail, 285, 540, 50, 5, 67.5);
+        shapes.stadium(colors.detail, 300, 532.5, 50, 5, 67.5);
+        shapes.stadium(colors.detail, 315, 525, 50, 5, 67.5);
+        shapes.stadium(colors.detail, 330, 517.5, 50, 5, 67.5);
 
         // battery light
-        shapes.circle(color_battery, 55, 140, 5);
+        shapes.circle(colors.battery, 55, 140, 5);
 
         // headphone detail
-        shapes.stadium(color_detail, 160, 575, 40, 15, 0);
-        shapes.line(color_detail, 165, 575, 165, 592, 3);
-        shapes.line(color_detail, 172, 575, 172, 592, 3);
-        shapes.line(color_detail, 179, 575, 179, 592, 3);
+        shapes.stadium(colors.detail, 160, 575, 40, 15, 0);
+        shapes.line(colors.detail, 165, 575, 165, 592, 3);
+        shapes.line(colors.detail, 172, 575, 172, 592, 3);
+        shapes.line(colors.detail, 179, 575, 179, 592, 3);
 
         // on off detail
-        shapes.stadium(color_detail, 80, 15, 50, 15, 0);
-        shapes.line(color_detail, 70, 15, 70, 0, 3);
-        shapes.line(color_detail, 77, 15, 77, 0, 3);
-        shapes.line(color_detail, 84, 15, 84, 0, 3);
+        shapes.stadium(colors.detail, 80, 15, 50, 15, 0);
+        shapes.line(colors.detail, 70, 15, 70, 0, 3);
+        shapes.line(colors.detail, 77, 15, 77, 0, 3);
+        shapes.line(colors.detail, 84, 15, 84, 0, 3);
 
         // lines at top of console
-        shapes.line(color_detail, 0, 30, 360, 30, 3);
-        shapes.line(color_detail, 30, 0, 30, 30, 3);
-        shapes.line(color_detail, 330, 0, 330, 30, 3);
+        shapes.line(colors.detail, 0, 30, 360, 30, 3);
+        shapes.line(colors.detail, 30, 0, 30, 30, 3);
+        shapes.line(colors.detail, 330, 0, 330, 30, 3);
 
         // lines on the screen face
-        shapes.line(color_line_1, 40, 60, 320, 60, 3);
-        shapes.line(color_line_2, 40, 65, 320, 65, 3);
+        shapes.line(colors.line1, 40, 60, 320, 60, 3);
+        shapes.line(colors.line2, 40, 65, 320, 65, 3);
 
         // small triangle details around dpad
-        shapes.triangle(color_detail, 75, 350, 7, 0);
-        shapes.triangle(color_detail, 25, 400, 7, 270);
-        shapes.triangle(color_detail, 125, 400, 7, 90);
-        shapes.triangle(color_detail, 75, 450, 7, 180);
+        shapes.triangle(colors.detail, 75, 350, 7, 0);
+        shapes.triangle(colors.detail, 25, 400, 7, 270);
+        shapes.triangle(colors.detail, 125, 400, 7, 90);
+        shapes.triangle(colors.detail, 75, 450, 7, 180);
     };
 
-    draw();
+    /**
+     * The event handler for the color changing elements.
+     * Calls the relevant color changing function based on who called it.
+     * Then once the colors are set, it can redraw.
+     * @param {Object} e Event object
+     **/
+    update = function (e) {
+        console.log(e);
+
+        if (e.currentTarget.id === 'bw') {
+            colors.bw();
+        } else if (e.currentTarget.id === 'standard') {
+            colors.standard();
+        } else if (e.currentTarget.id === 'mono') {
+            colors.mono();
+        } else if (e.currentTarget.id === 'rainbow') {
+            colors.rainbow();
+        }
+
+        draw();
+    };
+
+    /**
+     * Initial setup.
+     * Grab the canvas, context, setup event handlers and set the default
+     * color codes. Then call the draw function to draw shapes to the canvas.
+     **/
+    init = function () {
+        var i,
+            switches;
+
+        canvas = document.getElementById('gameboy');
+        context = canvas.getContext('2d');
+        colors.standard();
+
+        switches = document.getElementsByClassName('switch');
+
+        for (i = 0; i < switches.length; i += 1) {
+            switches[i].addEventListener("click", update, false);
+        }
+
+        draw();
+    };
+
+    init();
 }());
