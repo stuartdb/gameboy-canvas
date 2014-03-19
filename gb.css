@@ -1,0 +1,49 @@
+* {
+    border : 1px;
+    margin: 0px auto;
+    padding: 0px;
+}
+
+html, body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+h1 {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+p {
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.center {
+    display: block;
+    margin: 0px auto;
+}
+
+.switch {
+    display: inline-block;
+    text-align: center;
+    width: 24%;
+    cursor: pointer;
+}
+
+#container {
+    position: relative;
+    width: 360px;
+    margin: 0px auto;
+}
+
+#canvas {
+    padding: 10px;
+}

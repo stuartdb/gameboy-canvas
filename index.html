@@ -2,15 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700'
+          rel='stylesheet' type='text/css'>
     <link href="gb.css" rel="stylesheet" type="text/css">
-    <title>gb-ll</title>
+    <title>Gameboy Canvas</title>
   </head>
   <body>
-    <canvas id="gameboy" width="430" height="700"></canvas>
-    <span id="standard" class="switch">Standard </span>
-    <span id="bw" class="switch">Black and White </span>
-    <span id="mono" class="switch">Mono </span>
-    <span id="rainbow" class="switch">Rainbow </span>
+    <div id="container">
+      <div>
+        <h1>Gameboy Canvas</h1>
+      </div>
+      <div>
+          <span id="standard" class="switch">Standard</span>
+          <span id="bw" class="switch">Black & White</span>
+          <span id="mono" class="switch">Mono</span>
+          <span id="rainbow" class="switch">Rainbow</span>
+      </div>
+      <div id="canvas">
+        <canvas id="gameboy" width="360" height="592" class="center"></canvas>
+      </div>
+      <div id = "footer">
+        <a href="https://github.com/stuartdb/gameboy-canvas">
+          <img src="img/github.png" alt="View source on GitHub" class="center">
+        </a>
+      </div>
+    </div>
   </body>
   <script src="gb.js" type="text/javascript"></script>
 </html>
