@@ -78,15 +78,15 @@
          * Sets the color codes to some crazy rainbow colors
          **/
         rainbow : function () {
-            colors.ab = 'rgb(140,30,80)';
-            colors.dpad = 'rgb(0,0,0)';
-            colors.shell = 'rgb(190,190,190)';
-            colors.face = 'rgb(88,88,100)';
-            colors.detail = 'rgb(200,200,200)';
-            colors.battery = 'rgb(40,40,40)';
-            colors.line1 = 'rgb(140,30,80)';
-            colors.line2 = 'rgb(20,30,120)';
-            colors.screen = 'rgb(80,100,20)';
+            colors.ab = 'rgb(255,0,0)';
+            colors.dpad = 'rgb(255,0,255)';
+            colors.shell = 'rgb(0,255,255)';
+            colors.face = 'rgb(0,255,0)';
+            colors.detail = 'rgb(0,0,255)';
+            colors.battery = 'rgb(0,0,255)';
+            colors.line1 = 'rgb(255,255,255)';
+            colors.line2 = 'rgb(0,0,0)';
+            colors.screen = 'rgb(255,255,0)';
         }
     };
 
