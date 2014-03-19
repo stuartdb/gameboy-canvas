@@ -40,18 +40,25 @@
             colors.screen = 'rgb(0,0,0)';
         },
         /**
-         * Sets the color codes to attempt to emulate the screen colors.
+         * Sets the color codes to the monochrome 4-shade palette if the
+         * original screen. The four color codes used are the various shades
+         * of olive
          **/
         mono : function () {
-            colors.ab = 'rgb(140,30,80)';
-            colors.dpad = 'rgb(0,0,0)';
-            colors.shell = 'rgb(190,190,190)';
-            colors.face = 'rgb(88,88,100)';
-            colors.detail = 'rgb(200,200,200)';
-            colors.battery = 'rgb(40,40,40)';
-            colors.line1 = 'rgb(140,30,80)';
-            colors.line2 = 'rgb(20,30,120)';
-            colors.screen = 'rgb(80,100,20)';
+            var lightest = 'rgb(155,188,15)',
+                light = 'rgb(139,172,15)',
+                dark = 'rgb(48,98,48)',
+                darkest = 'rgb(15,56,15)';
+
+            colors.ab = dark;
+            colors.dpad = darkest;
+            colors.shell = lightest;
+            colors.face = dark;
+            colors.detail = light;
+            colors.battery = darkest;
+            colors.line1 = light;
+            colors.line2 = lightest;
+            colors.screen = lightest;
         },
         /**
          * Sets the color codes close to that of the original system.
